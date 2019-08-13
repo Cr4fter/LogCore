@@ -3,6 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Cr4fter/LogCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Cr4fter/LogCore</PackageProjectUrl>
+    <Description>A Basic but Expandable Logging Library Written in c#</Description>
+    <Copyright>Noah Forberich © 2019</Copyright>
+    <NeutralLanguage>English</NeutralLanguage>
+    <Product>LogCore TestApplication</Product>
   </PropertyGroup>
 
   <ItemGroup>

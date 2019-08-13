@@ -4,17 +4,19 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Noah Forberich</Authors>
     <Company></Company>
-    <Description>A Basic and Expandable Logging Libary</Description>
+    <Description>A Basic but Expandable Logging Library Written in c#</Description>
     <Copyright>Noah Forberich © 2019</Copyright>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/Cr4fter/LogCore</PackageProjectUrl>
     <AssemblyVersion>1.0.1.0</AssemblyVersion>
     <Version>1.0.1</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <RepositoryUrl></RepositoryUrl>
+    <RepositoryUrl>https://github.com/Cr4fter/LogCore</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>LogCore Logging Logger c#Logging csharpLogging</PackageTags>
   </PropertyGroup>
 
 </Project>

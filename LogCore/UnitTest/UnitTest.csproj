@@ -4,6 +4,18 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <PackageProjectUrl>https://github.com/Cr4fter/LogCore</PackageProjectUrl>
+
+    <RepositoryUrl>https://github.com/Cr4fter/LogCore</RepositoryUrl>
+
+    <Copyright>Noah Forberich © 2019</Copyright>
+
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <Authors>Noah Forberich</Authors>
+
+    <Product>LogCore UnitTests</Product>
   </PropertyGroup>
 
   <ItemGroup>
