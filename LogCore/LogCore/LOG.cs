@@ -14,16 +14,44 @@ namespace LogCore
 {
     public static class LOG
     {
+        /// <summary>
+        /// If no System was Setup Earlier a new Default Console Logger will be created.
+        /// </summary>
+        private static void InitializeIfNotSetup()
+        {
+            if (Instance == null)
+            {
+                isDefaultLogger = true;
+                Instance = new LOGInstance();
+            }
+        }
+
+        /// <summary>
+        /// Clears a default logger that might have implicitly be created and setsup the passed instance as the singleton.
+        /// </summary>
+        /// <param name="instance"></param>
         public static void SetupSingleton(ILOGInstance instance)
         {
-            if (Instance != null) throw new AlreadyInitializedException();
+            if (Instance != null)
+            {
+                if (isDefaultLogger)
+                {
+                    Instance.Dispose();
+                }
+                else
+                {
+                    throw new AlreadyInitializedException();
+                }
+            }
             Instance = instance;
+            isDefaultLogger = false;
         }
 
         public static void ClearSingleton()
         {
             if (Instance == null) throw new NotInitializedException();
             Instance = null;
+            isDefaultLogger = false;
         }
 
         public static ILOGInstance GetSingleton()
@@ -32,45 +60,45 @@ namespace LogCore
         }
 
         internal static ILOGInstance Instance;
-
+        internal static bool isDefaultLogger;
         public static void Fatal(string message, string tag = "Fatal")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Fatal);
             Instance.HandleMessage(msg);
         }
 
         public static void Error(string message, string tag = "Error")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Error);
             Instance.HandleMessage(msg);
         }
 
         public static void Warning(string message, string tag = "Warn")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Warning);
             Instance.HandleMessage(msg);
         }
 
         public static void Info(string message, string tag = "INFO")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Info);
             Instance.HandleMessage(msg);
         }
 
         public static void Debug(string message, string tag = "DBG")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Debug);
             Instance.HandleMessage(msg);
         }
 
         public static void Trace(string message, string tag = "TRACE")
         {
-            if (Instance == null) throw new NotInitializedException();
+            InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Trace);
             Instance.HandleMessage(msg);
         }
