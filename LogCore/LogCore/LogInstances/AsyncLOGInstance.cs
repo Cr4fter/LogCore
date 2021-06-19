@@ -30,7 +30,7 @@ namespace LogCore.LogInstances
         private bool _handlingInProgress = false;
 
         /// <inheritdoc />
-        public LogSeverity SeverityFilter { get; private set; } = LogSeverity.Trace;
+        public override LogSeverity SeverityFilter { get; internal set; } = LogSeverity.Trace;
 
         public AsyncLOGInstance(bool spawnWorkerThread = true, SyncType synchroniser = SyncType.None, bool singletonMode = false, IEnumerable<ILogOutput> outputters = null, IEnumerable<KeyValuePair<string, string>> additionalFields = null)
         {
@@ -161,7 +161,7 @@ namespace LogCore.LogInstances
         /// shuts down the WorkerThread if it was started.
         /// clears up the outputters.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             if (_singleton)
             {
@@ -187,54 +187,54 @@ namespace LogCore.LogInstances
         }
 
         /// <inheritdoc />
-        public void SetLogFilter(LogSeverity severity)
+        public override void SetLogFilter(LogSeverity severity)
         {
             SeverityFilter = severity;
         }
 
         /// <inheritdoc/>
-        public void Fatal(string message, string tag = "Fatal")
+        public override void Fatal(string message, string tag = "Fatal")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Fatal);
             HandleMessage(logMessage);
         }
         /// <inheritdoc/>
-        public void Error(string message, string tag = "Error")
+        public override void Error(string message, string tag = "Error")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Error);
             HandleMessage(logMessage);
         }
 
         /// <inheritdoc/>
-        public void Warning(string message, string tag = "Warn")
+        public override void Warning(string message, string tag = "Warn")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Warning);
             HandleMessage(logMessage);
         }
 
         /// <inheritdoc/>
-        public void Info(string message, string tag = "INFO")
+        public override void Info(string message, string tag = "INFO")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Info);
             HandleMessage(logMessage);
         }
 
         /// <inheritdoc/>
-        public void Debug(string message, string tag = "DBG")
+        public override void Debug(string message, string tag = "DBG")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Debug);
             HandleMessage(logMessage);
         }
 
         /// <inheritdoc/>
-        public void Trace(string message, string tag = "TRACE")
+        public override void Trace(string message, string tag = "TRACE")
         {
             LOGMessage logMessage = new LOGMessage(message, tag, LogSeverity.Trace);
             HandleMessage(logMessage);
         }
 
         /// <inheritdoc/>
-        public void LogMessage(LOGMessage message)
+        public override void LogMessage(LOGMessage message)
         {
             HandleMessage(message);
         }

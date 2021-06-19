@@ -66,28 +66,28 @@ namespace LogCore
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Fatal);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
 
         public static void Error(string message, string tag = "Error")
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Error);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
 
         public static void Warning(string message, string tag = "Warn")
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Warning);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
 
         public static void Info(string message, string tag = "INFO")
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Info);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace LogCore
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Debug);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace LogCore
         {
             InitializeIfNotSetup();
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Trace);
-            Instance.HandleMessage(msg);
+            Instance.LogMessage(msg);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace LogCore
         private readonly bool _disposeSingleton;
 
         /// <inheritdoc />
-        public LogSeverity SeverityFilter { get; private set; } = LogSeverity.Trace;
+        public override LogSeverity SeverityFilter { get; internal set; } = LogSeverity.Trace;
 
         /// <summary>
         /// initializes the Logging system with defined outputters
@@ -90,7 +90,7 @@ namespace LogCore
         }
 
         /// <summary>Shuts down all Outputters.</summary>
-        public void Dispose()
+        public override void Dispose()
         {
             if (_disposeSingleton)
             {
@@ -111,55 +111,55 @@ namespace LogCore
         }
 
         /// <inheritdoc />
-        public void SetLogFilter(LogSeverity severity)
+        public override void SetLogFilter(LogSeverity severity)
         {
             SeverityFilter = severity;
         }
 
         /// <inheritdoc/>
-        public void Fatal(string message, string tag = "Fatal")
+        public override void Fatal(string message, string tag = "Fatal")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Fatal);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void Error(string message, string tag = "Error")
+        public override void Error(string message, string tag = "Error")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Error);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void Warning(string message, string tag = "Warn")
+        public override void Warning(string message, string tag = "Warn")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Warning);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void Info(string message, string tag = "INFO")
+        public override void Info(string message, string tag = "INFO")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Info);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void Debug(string message, string tag = "DBG")
+        public override void Debug(string message, string tag = "DBG")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Debug);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void Trace(string message, string tag = "TRACE")
+        public override void Trace(string message, string tag = "TRACE")
         {
             LOGMessage msg = new LOGMessage(message, tag, LogSeverity.Trace);
             HandleMessage(msg);
         }
 
         /// <inheritdoc/>
-        public void LogMessage(LOGMessage message)
+        public override void LogMessage(LOGMessage message)
         {
             HandleMessage(message);
         }
