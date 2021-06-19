@@ -1,4 +1,6 @@
-﻿#region License
+﻿// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+#region License
 // Copyright 2019 Noah Forberich
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -27,7 +29,7 @@ namespace LogCore.LogInstances
         private readonly Thread _workerThread;
         private readonly SyncType _synchroniser;
         private readonly EventWaitHandle _waiter;
-        private bool _handlingInProgress = false;
+        private Mutex _handlingInProgress = new Mutex();
 
         /// <inheritdoc />
         public override LogSeverity SeverityFilter { get; internal set; } = LogSeverity.Trace;
@@ -108,29 +110,34 @@ namespace LogCore.LogInstances
         public int ProcessMessages(int maxMessages = -1)
         {
             int counter = 0;
-            LOGMessage currMessage;
-            _handlingInProgress = true;
-            for (int i = 0; i != maxMessages; i++)
+            _handlingInProgress.WaitOne();
+            try
             {
-                lock (_messageQueue)
+                LOGMessage currMessage;
+                for (int i = 0; i != maxMessages; i++)
                 {
-                    if (_messageQueue.Count == 0)
+                    lock (_messageQueue)
                     {
-                        _handlingInProgress = false;
-                        return counter;
+                        if (_messageQueue.Count == 0)
+                        {
+                            return counter;
+                        }
+                        currMessage = _messageQueue[0];
+                        _messageQueue.RemoveAt(0);
                     }
-                    currMessage = _messageQueue[0];
-                    _messageQueue.RemoveAt(0);
-                }
-                foreach (ILogOutput outputter in _outputters)
-                {
-                    outputter.HandleMessage(currMessage);
-                }
+                    foreach (ILogOutput outputter in _outputters)
+                    {
+                        outputter.HandleMessage(currMessage);
+                    }
 
-                counter++;
+                    counter++;
+                }
             }
-
-            _handlingInProgress = false;
+            finally
+            {
+                _handlingInProgress.ReleaseMutex();
+            }
+            
             return counter;
         }
         /// <summary>
@@ -168,7 +175,8 @@ namespace LogCore.LogInstances
                 LOG.ClearSingleton();
             }
 
-            while (_handlingInProgress) { }
+            _handlingInProgress.WaitOne();
+            _handlingInProgress.ReleaseMutex();
             if (_workerThread != null)
             {
                 //Signaling thread to shut down
@@ -184,6 +192,8 @@ namespace LogCore.LogInstances
             {
                 outputter.Dispose();
             }
+
+            _handlingInProgress.Dispose();
         }
 
         /// <inheritdoc />
