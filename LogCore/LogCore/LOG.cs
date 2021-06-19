@@ -8,6 +8,7 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
+using System.Diagnostics;
 using LogCore.Exceptions;
 
 namespace LogCore
@@ -89,6 +90,12 @@ namespace LogCore
             Instance.HandleMessage(msg);
         }
 
+        /// <summary>
+        /// Logs a Trace Message only when the calling binary was build with the DEBUG Constant.
+        /// </summary>
+        /// <param name="message">the Debug Message</param>
+        /// <param name="tag">Defaults to DBG</param>
+        [Conditional("DEBUG")]
         public static void Debug(string message, string tag = "DBG")
         {
             InitializeIfNotSetup();
@@ -96,6 +103,12 @@ namespace LogCore
             Instance.HandleMessage(msg);
         }
 
+        /// <summary>
+        /// Logs a Trace Message only when the calling binary was build with the TRACE Constant.
+        /// </summary>
+        /// <param name="message">the Trace Message</param>
+        /// <param name="tag">Defaults to TRACE</param>
+        [Conditional("TRACE")]
         public static void Trace(string message, string tag = "TRACE")
         {
             InitializeIfNotSetup();
